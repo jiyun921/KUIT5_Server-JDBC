@@ -59,7 +59,7 @@ public class QuestionDao {
         return findByQuestionId(holder.getId());
     }
 
-    private Question findByQuestionId(int questionId) {
+    public Question findByQuestionId(int questionId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
         String sql = "SELECT * FROM Questions WHERE questionId = ?";

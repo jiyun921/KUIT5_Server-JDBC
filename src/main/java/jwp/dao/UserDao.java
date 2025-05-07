@@ -49,9 +49,9 @@ public class UserDao {
             }
         };
 
-        RowMapper rowMapper = new RowMapper() {
+        RowMapper<User> rowMapper = new RowMapper() {
             @Override
-            public Object mapRow(ResultSet resultSet)   {
+            public User mapRow(ResultSet resultSet)   {
                 try {
                     return new User(
                             resultSet.getString("userId"),
@@ -65,7 +65,7 @@ public class UserDao {
             }
         };
 
-        return (User) jdbcTemplate.queryForObject(sql,preparedStatementSetter, rowMapper);
+        return jdbcTemplate.queryForObject(sql,preparedStatementSetter, rowMapper);
     }
 
     public void update(User user) {
@@ -102,9 +102,9 @@ public class UserDao {
             }
         };
 
-        RowMapper rowMapper = new RowMapper() {
+        RowMapper<User> rowMapper = new RowMapper<User>() {
             @Override
-            public Object mapRow(ResultSet resultSet) {
+            public User mapRow(ResultSet resultSet) {
                 try {
                     return new User(
                             resultSet.getString("userId"),
@@ -117,7 +117,7 @@ public class UserDao {
                 }
             }
         };
-        return (List<User>)jdbcTemplate.query(sql, preparedStatementSetter, rowMapper);
+        return jdbcTemplate.query(sql, preparedStatementSetter, rowMapper);
 
     }
 }

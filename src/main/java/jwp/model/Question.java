@@ -22,12 +22,12 @@ public class Question {
         this.countOfAnswer = countOfAnswer;
     }
 
-    public Question(String writer, String title, String content) {
+    public Question(String writer, String title, String content, Timestamp createdDate, int countOfAnswer) {
         this.writer = writer;
         this.title = title;
         this.content = content;
-        this.createdDate = Timestamp.from(Instant.now());
-        this.countOfAnswer = 0;
+        this.createdDate = createdDate;
+        this.countOfAnswer = countOfAnswer;
     }
 
     public int getQuestionId() {

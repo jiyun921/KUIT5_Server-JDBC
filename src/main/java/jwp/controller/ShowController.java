@@ -1,6 +1,6 @@
 package jwp.controller;
 
-import core.mvc.Controller;
+import core.mvc.*;
 import jwp.dao.AnswerDao;
 import jwp.dao.QuestionDao;
 import jwp.model.Answer;
@@ -10,25 +10,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowController implements Controller {
+public class ShowController extends AbstractController {
     private final QuestionDao questionDao = new QuestionDao();
     private final AnswerDao answerDao = new AnswerDao();
 
     @Override
-    public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        String questionIdStr = req.getParameter("questionId");
+    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String questionIdStr = request.getParameter("questionId");
 
         if (questionIdStr == null) {
-            return "redirect:/";
+            return jspView("redirect:/");
         }
 
         int questionId = Integer.parseInt(questionIdStr);
         Question question = questionDao.findByQuestionId(questionId);
         List<Answer> answers = answerDao.findAllByQuestionId(questionId);
 
-        req.setAttribute("question", question);
-        req.setAttribute("answers", answers);
-        return "/qna/show.jsp";
+        request.setAttribute("question", question);
+        request.setAttribute("answers", answers);
+        return jspView("/qna/show.jsp");
 
     }
 }

@@ -11,21 +11,14 @@ import java.sql.Timestamp;
 
 public class CreateQuestionController implements Controller {
 
-    private final QuestionDao questionDao = new QuestionDao();
-
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-        String writer = req.getParameter("writer");
-        String title = req.getParameter("title");
-        String contents = req.getParameter("contents");
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        int countOfAnswer = 0;
-
-        Question question = new Question(writer, title, contents, timestamp, countOfAnswer);
-
-        KeyHolder keyHolder = new KeyHolder();
-        Question savedQuestion = questionDao.insert(question, keyHolder);
-
+        QuestionDao questionDao = new QuestionDao();
+        Question question = new Question(
+                req.getParameter("writer"),
+                req.getParameter("title"),
+                req.getParameter("contents"));
+        Question savedQuestion = questionDao.insert(question);
         return "redirect:/";
     }
 }

@@ -1,4 +1,5 @@
 //자바 스크립트
+console.log("scripts.js 호출됨");
 $(function() {
     $(".answerWrite input[type=submit]").click(addAnswer);
 });

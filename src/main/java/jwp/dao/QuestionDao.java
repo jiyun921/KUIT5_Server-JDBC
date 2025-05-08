@@ -20,13 +20,9 @@ public class QuestionDao {
             @Override
             public Question mapRow(ResultSet resultSet) {
                 try {
-                    return new Question(resultSet.getInt("questionId"),
-                            resultSet.getString("writer"),
-                            resultSet.getString("title"),
-                            resultSet.getString("contents"),
-                            resultSet.getTimestamp("createdDate"),
-                            resultSet.getInt("countOfAnswer")
-                    );
+                    return new Question(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                            resultSet.getString(4), resultSet.getTimestamp(5), resultSet.getInt(6));
+
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -36,25 +32,25 @@ public class QuestionDao {
         return jdbcTemplate.query(sql, preparedStatement -> {}, rowMapper);
     }
 
-    public Question insert(Question question, KeyHolder holder) {
+    public Question insert(Question question) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        String sql = "INSERT INTO Questions (writer, title, contents, createdDate, countOfAnswer) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Questions (writer, title, contents, createdDate) VALUES (?, ?, ?, ?)";
         PreparedStatementSetter preparedStatementSetter = new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement) {
                 try {
                     preparedStatement.setString(1, question.getWriter());
                     preparedStatement.setString(2, question.getTitle());
-                    preparedStatement.setString(3, question.getContent());
+                    preparedStatement.setString(3, question.getContents());
                     preparedStatement.setTimestamp(4, question.getCreatedDate());
-                    preparedStatement.setInt(5, question.getCountOfAnswer());
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
             }
         };
 
+        KeyHolder holder = new KeyHolder();
         jdbcTemplate.update(sql, preparedStatementSetter,holder);
         return findByQuestionId(holder.getId());
     }
@@ -62,7 +58,8 @@ public class QuestionDao {
     public Question findByQuestionId(int questionId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        String sql = "SELECT * FROM Questions WHERE questionId = ?";
+        String sql = "SELECT questionId, writer, title, contents, createdDate, countOfAnswer " +
+                "FROM QUESTIONS WHERE questionId=?";
         PreparedStatementSetter preparedStatementSetter = new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement preparedStatement){

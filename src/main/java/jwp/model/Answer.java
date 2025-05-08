@@ -1,16 +1,17 @@
 package jwp.model;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Answer {
+
     private int answerId;
     private String writer;
     private String contents;
     private Date createdDate;
     private int questionId;
+
 
     public Answer(int answerId, int questionId, String writer, String contents, Date createdDate) {
         this.answerId = answerId;
@@ -27,27 +28,24 @@ public class Answer {
         this.createdDate = Date.valueOf(LocalDate.now());
     }
 
-
     public int getAnswerId() {
         return answerId;
+    }
+
+    public int getQuestionId() {
+        return questionId;
     }
 
     public String getWriter() {
         return writer;
     }
 
-
     public String getContents() {
         return contents;
     }
 
-
     public Date getCreatedDate() {
         return createdDate;
-    }
-
-    public int getQuestionId() {
-        return questionId;
     }
 
     @Override

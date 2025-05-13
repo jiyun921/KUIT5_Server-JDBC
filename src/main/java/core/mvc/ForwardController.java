@@ -2,8 +2,10 @@ package core.mvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.Map;
 
-public class ForwardController extends AbstractController {
+public class ForwardController implements Controller {
 
     private final String forwardUrl;
 
@@ -15,7 +17,7 @@ public class ForwardController extends AbstractController {
     }
 
     @Override
-    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        return jspView(forwardUrl);
+    public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {
+        return forwardUrl;
     }
 }

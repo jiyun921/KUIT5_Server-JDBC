@@ -8,27 +8,23 @@ import jwp.model.Question;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
-public class ShowController extends AbstractController {
+public class ShowController implements Controller {
     private final QuestionDao questionDao = new QuestionDao();
     private final AnswerDao answerDao = new AnswerDao();
 
     @Override
-    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String questionIdStr = request.getParameter("questionId");
+    public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {
+        String questionId = params.get("questionId");
+        Question question = questionDao.findByQuestionId(Integer.parseInt(questionId));
+        List<Answer> answers = answerDao.findAllByQuestionId(Integer.parseInt(questionId));
 
-        if (questionIdStr == null) {
-            return jspView("redirect:/");
-        }
-
-        int questionId = Integer.parseInt(questionIdStr);
-        Question question = questionDao.findByQuestionId(questionId);
-        List<Answer> answers = answerDao.findAllByQuestionId(questionId);
-
-        request.setAttribute("question", question);
-        request.setAttribute("answers", answers);
-        return jspView("/qna/show.jsp");
+        model.put("question", question);
+        model.put("answers", answers);
+        return "/qna/show.jsp";
 
     }
 }

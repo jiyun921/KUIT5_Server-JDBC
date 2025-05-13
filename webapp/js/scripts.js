@@ -1,8 +1,6 @@
 //자바 스크립트
-console.log("scripts.js 호출됨");
-$(function() {
-    $(".answerWrite input[type=submit]").click(addAnswer);
-});
+$(".answerWrite input[type=submit]").click(addAnswer);
+
 function addAnswer(e) {
     console.log("addAnswer 호출됨");
     e.preventDefault();
@@ -20,7 +18,7 @@ function addAnswer(e) {
 
 //요청이 성공했을 때 아래 함수를 실행 시킴. 즉, 동적으로 화면 생성
 function onSuccess(json, status) {
-    console.log(json.writer)
+    console.log(json.answer.writer)
     var answerTemplate = $("#answerTemplate").html();
     var template = answerTemplate.format(json.answer.writer, new Date(json.answer.createdDate), json.answer.contents, json.answer.answerId);
     $(".qna-comment-kuit-articles").prepend(template);

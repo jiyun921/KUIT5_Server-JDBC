@@ -7,18 +7,20 @@ import jwp.model.Question;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Map;
 
-public class CreateQuestionController extends AbstractController {
+public class CreateQuestionController implements Controller {
 
     @Override
-    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {
         QuestionDao questionDao = new QuestionDao();
         Question question = new Question(
-                request.getParameter("writer"),
-                request.getParameter("title"),
-                request.getParameter("contents"));
+                params.get("writer"),
+                params.get("title"),
+                params.get("contents"));
         Question savedQuestion = questionDao.insert(question);
-        return jspView("redirect:/");
+        return "redirect:/";
     }
 }

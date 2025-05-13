@@ -7,19 +7,21 @@ import jwp.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.SQLException;
+import java.util.Map;
 
-public class UpdateUserController extends AbstractController {
+public class UpdateUserController implements Controller {
 
     @Override
-    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {
         User modifiedUser = new User(
-                request.getParameter("userId"),
-                request.getParameter("password"),
-                request.getParameter("name"),
-                request.getParameter("email"));
+                params.get("userId"),
+                params.get("password"),
+                params.get("name"),
+                params.get("email"));
         //MemoryUserRepository.getInstance().update(modifiedUser);
         UserDao userDao = new UserDao();
         userDao.update(modifiedUser);
-        return jspView( "redirect:/user/list");
+        return "redirect:/user/list";
     }
 }

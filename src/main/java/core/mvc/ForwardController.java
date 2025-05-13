@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class ForwardController implements Controller {
+public class ForwardController implements ControllerV2 {
 
     private final String forwardUrl;
 
@@ -20,4 +20,5 @@ public class ForwardController implements Controller {
     public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {
         return forwardUrl;
     }
+
 }

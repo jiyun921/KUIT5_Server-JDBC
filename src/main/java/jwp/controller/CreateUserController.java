@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class CreateUserController implements Controller {
+public class CreateUserController implements ControllerV2 {
 
     @Override
     public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {

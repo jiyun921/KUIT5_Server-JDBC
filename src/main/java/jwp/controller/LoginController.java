@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class LoginController implements Controller {
+public class LoginController implements ControllerV2 {
     private HttpSession session;
 
     @Override

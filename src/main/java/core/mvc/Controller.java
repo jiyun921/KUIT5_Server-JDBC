@@ -14,6 +14,4 @@ public interface Controller {
 
     default void setUserFromSession(User user) {
     }
-
-    String execute(Map<String, String> params, Map<String, Object> model) throws SQLException;
 }

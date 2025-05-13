@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Map;
 
-public class CreateQuestionController implements Controller {
+public class CreateQuestionController implements ControllerV2 {
 
     @Override
     public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {

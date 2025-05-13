@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class CreateQuestionFormController implements Controller {
+public class CreateQuestionFormController implements ControllerV2 {
 
     private HttpSession session;
 

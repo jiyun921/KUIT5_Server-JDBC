@@ -16,10 +16,10 @@ import java.util.Map;
 
 import static core.mvc.ViewResolver.JSON_VIEW_PREFIX;
 
-public class AddAnswerController implements Controller {
+public class AddAnswerController implements ControllerV1 {
     AnswerDao answerDao = new AnswerDao();
     QuestionDao questionDao = new QuestionDao();
-    @Override
+
     public String execute(Map<String, String> params, Map<String, Object> model) throws SQLException {
         Answer answer = new Answer(Integer.parseInt(params.get("questionId")), params.get("writer"),
                 params.get("contents"));
@@ -32,6 +32,20 @@ public class AddAnswerController implements Controller {
 
         model.put("answer", answer);
         return JSON_VIEW_PREFIX;
+    }
+
+    @Override
+    public ModelAndView execute(Map<String, String> params) throws SQLException {
+        Answer answer = new Answer(Integer.parseInt(params.get("questionId")), params.get("writer"),
+                params.get("contents"));
+
+        Answer savedAnswer = answerDao.insert(answer);
+        Question question = questionDao.findByQuestionId(answer.getQuestionId());
+        question.increaseCountOfAnswer();
+        questionDao.updateCountOfAnswer(question);
+
+        return new ModelAndView(JSON_VIEW_PREFIX)
+                .addObject("answer", answer);
     }
 
 }

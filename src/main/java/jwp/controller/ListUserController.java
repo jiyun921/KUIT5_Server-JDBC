@@ -12,7 +12,7 @@ import jwp.util.UserSessionUtils;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class ListUserController implements Controller {
+public class ListUserController implements ControllerV2 {
 
     private HttpSession session;
 
